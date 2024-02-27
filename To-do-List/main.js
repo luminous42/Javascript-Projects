@@ -1,24 +1,54 @@
 const taskList = document.getElementById("taskList");
+const inputTask = document.getElementById("inputTask");
 
 function addtask() {
-  const inputTask = document.getElementById("inputTask").value;
-
-  if (inputTask != "" && !istaskalreadyexist(inputTask)) {
+  if (inputTask.value === "") {
+    alert("please enter a task!");
+  } else {
+    //created new li element for task
     const latest_task = document.createElement("li");
-    latest_task.textContent = inputTask;
+
+    //enter input box value to the li element
+    latest_task.textContent = inputTask.value;
+
+    //adding new li to ul element
     taskList.appendChild(latest_task);
 
+    let span = document.createElement("span");
+    span.innerHTML = "\u00D7";
+
+    //clearing input box
     document.getElementById("inputTask").value = "";
+
+    cache();
   }
 }
 
-function istaskalreadyexist(newTask) {
-  // Check if the newTask is already in the list
-  const tasks = taskList.getElementsByTagName("li");
-  for (const task of tasks) {
-    if (task.textContent === newTask) {
-      return true;
+taskList.addEventListener(
+  "click",
+  function (e) {
+    console.log(e.target);
+    console.log(e.target.tagName);
+    console.log(e.target.classList);
+
+    console.log(e.target.parentElement);
+    if (e.target && e.target.tagName === "LI") {
+      e.target.classList.toggle("checked");
+      savedataBase();
+    } else if (e.target.tagName === "SPAN") {
+      e.target.parentElement.remove();
+      savedataBase();
     }
-  }
-  return false;
+  },
+  false
+);
+
+function cache() {
+  localStorage.setItem("savedtasks", taskList.innerHTML);
 }
+
+function getData() {
+  taskList.innerHTML = localStorage.getItem("savedtasks");
+}
+
+getData();
