@@ -44,18 +44,29 @@
   margin-bottom: 25px;
 }
 
+.task-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 input {
   flex: 1;
   border: none;
   outline: none;
   background: transparent;
   padding: 10px;
+  user-select: none;
+}
+
+.hide {
+  visibility: hidden;
 }
 
 button {
   border: none;
   outline: none;
-  padding: 16px 50px;
+  padding: 10px 30px;
   background: #ff4548;
   color: #fff;
   font-size: 16px;
@@ -70,6 +81,7 @@ ul li {
   /* user-select: none; */
   cursor: pointer;
   position: relative;
+  user-select: none;
 }
 
 ul li::before {

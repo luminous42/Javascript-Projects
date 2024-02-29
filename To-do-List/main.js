@@ -15,7 +15,10 @@ function addtask() {
     taskList.appendChild(latest_task);
 
     let span = document.createElement("span");
-    span.innerHTML = "\u00D7";
+    span.innerHTML = "\u00D7"; //cross icon
+
+    latest_task.appendChild(span);
+    reorderTasks();
 
     //clearing input box
     document.getElementById("inputTask").value = "";
@@ -34,14 +37,38 @@ taskList.addEventListener(
     console.log(e.target.parentElement);
     if (e.target && e.target.tagName === "LI") {
       e.target.classList.toggle("checked");
-      savedataBase();
+      cache();
+
+      reorderTasks();
     } else if (e.target.tagName === "SPAN") {
       e.target.parentElement.remove();
-      savedataBase();
+      cache();
     }
   },
   false
 );
+
+// Function to reorder tasks based on checked status
+function reorderTasks() {
+  const tasks = Array.from(taskList.getElementsByTagName("li"));
+  const uncheckedTasks = tasks.filter(
+    (task) => !task.classList.contains("checked")
+  );
+  const checkedTasks = tasks.filter((task) =>
+    task.classList.contains("checked")
+  );
+
+  // Remove all tasks from the task list
+  while (taskList.firstChild) {
+    taskList.removeChild(taskList.firstChild);
+  }
+
+  // Append unchecked tasks first
+  uncheckedTasks.forEach((task) => taskList.appendChild(task));
+
+  // Append checked tasks last
+  checkedTasks.forEach((task) => taskList.appendChild(task));
+}
 
 function cache() {
   localStorage.setItem("savedtasks", taskList.innerHTML);
@@ -52,3 +79,9 @@ function getData() {
 }
 
 getData();
+
+const button = document.getElementById("filter");
+const hide = document.getElementById("hidden");
+button.addEventListener("click", function (e) {
+  hide.classList.toggle("hide");
+});

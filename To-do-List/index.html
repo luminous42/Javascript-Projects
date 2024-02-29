@@ -15,11 +15,32 @@
   <body>
     <div class="container">
       <div class="todo-app">
-        <header><h1>To do List</h1></header>
+        <header>
+          <h1>To do List <img src="images/icon.png" alt="image.png" /></h1>
+        </header>
 
         <div class="row">
+          <img src="bars-icon.svg" alt="icon" />
           <input type="text" placeholder="Write New Task" id="inputTask" />
           <button onclick="addtask()" id="addTask">Add Task</button>
+        </div>
+        <div class="row">
+          <input type="time" name="time" id="time" />
+          <input
+            type="text"
+            name="location"
+            id="location"
+            placeholder="Location"
+          />
+          <button id="filter">Filter</button>
+        </div>
+
+        <div class="task-filters" id="hidden">
+          <span id="all">All</span>
+          <span id="pending">Pending</span>
+          <span id="completed">Completed</span>
+
+          <button class="clear-btn">Clear All</button>
         </div>
 
         <ul id="taskList">
